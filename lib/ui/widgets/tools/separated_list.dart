@@ -17,25 +17,40 @@ class SeparatedWidgetList<E> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-        computeActualChildCountForSeparated(list?.length ?? 0),
-        (index) {
-          int itemIndex = index ~/ 2;
-          var item = list![itemIndex];
+    if (direction == Axis.vertical) {
+      return Column(
+        children: List.generate(
+          computeActualChildCountForSeparated(list?.length ?? 0),
+          (index) {
+            int itemIndex = index ~/ 2;
+            var item = list![itemIndex];
 
-          if (index.isOdd) {
-            if (direction == Axis.horizontal) {
-              return SizedBox(width: separation);
-            } else {
+            if (index.isOdd) {
               return SizedBox(height: separation);
             }
-          }
 
-          return builder(item);
-        },
-      ),
-    );
+            return builder(item);
+          },
+        ),
+      );
+    } else {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: List.generate(
+          computeActualChildCountForSeparated(list?.length ?? 0),
+          (index) {
+            int itemIndex = index ~/ 2;
+            var item = list![itemIndex];
+
+            if (index.isOdd) {
+              return SizedBox(width: separation);
+            }
+
+            return builder(item);
+          },
+        ),
+      );
+    }
   }
 
   int computeActualChildCountForSeparated(int itemCount) {

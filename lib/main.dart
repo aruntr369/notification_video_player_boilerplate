@@ -13,6 +13,7 @@ import 'constants/app_colors.dart';
 import 'constants/app_constants.dart';
 import 'constants/app_strings.dart';
 import 'ui/widgets/tools/screen_size.dart';
+import 'ui/widgets/tools/toast.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
                 child: child!,
               );
             },
+            toastBuilder: toastBuilder,
           ),
           navigatorKey: StackedService.navigatorKey,
           onGenerateRoute: StackedRouter().onGenerateRoute,
