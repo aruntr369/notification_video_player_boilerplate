@@ -1,4 +1,5 @@
 import 'package:stacked/stacked_annotations.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import '../services/api_service.dart';
 import '../ui/screens/home/home_view.dart';
@@ -11,6 +12,7 @@ import '../ui/screens/splash/splash_view.dart';
   ],
   dependencies: [
     LazySingleton(classType: ApiService),
+    LazySingleton(classType: NavigationService),
   ],
 )
 class AppSetup {}

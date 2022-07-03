@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 abstract class Palette {
   static const Color primary = Color(0xffFCE900);
+  static const Color scaffoldBackgroundColor = Color(0xffFFFFFF);
 }
 
 MaterialColor generateMaterialColor(Color color) {

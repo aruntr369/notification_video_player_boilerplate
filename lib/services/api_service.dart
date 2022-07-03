@@ -5,11 +5,15 @@ import 'package:http/http.dart' as http;
 import '../constants/app_strings.dart';
 
 class ApiService {
-  // Dev URL  :
-  // Live URL :
-  static const String baseUrl = "";
+  static const environment = ApiEnvironment.dev;
 
-  // AppUser? user;
+  static String baseUrl = environment.baseUrl;
+  static String baseUrlApi = "$baseUrl/public/api";
+  static String baseUrlImage = "$baseUrl/public/storage";
+
+  // final _userService = locator<UserService>();
+  // final _notificationService = locator<NotificationService>();
+
   var client = RetryClient(
     http.Client(),
     whenError: (onError, stackTrace) {
@@ -55,4 +59,13 @@ class ApiService {
   //   }
   //   return user;
   // }
+}
+
+enum ApiEnvironment {
+  dev("https://example.com"),
+  prod("https://prod.example.com");
+
+  const ApiEnvironment(this.baseUrl);
+
+  final String baseUrl;
 }
