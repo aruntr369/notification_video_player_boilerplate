@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:boilerplate/app/app.router.dart';
-import 'package:boilerplate/app/utils.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../../app/app.router.dart';
+import '../../../app/utils.dart';
 
 class SplashViewModel extends BaseViewModel {
   Timer? _timer;

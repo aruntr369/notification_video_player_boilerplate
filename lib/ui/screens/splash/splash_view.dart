@@ -1,7 +1,7 @@
-import 'package:boilerplate/constants/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../constants/assets.gen.dart';
 import '../../tools/screen_size.dart';
 import 'splash_viewmodel.dart';
 
