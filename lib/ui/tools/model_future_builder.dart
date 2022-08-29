@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants/app_colors.dart';
-import '../shared.dart';
+import '../widgets/shared.dart';
 
 class ModelFutureBuilder<T> extends StatelessWidget {
   const ModelFutureBuilder({

@@ -7,13 +7,13 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:statusbarz/statusbarz.dart';
 
-import 'app/app.locator.dart';
 import 'app/app.router.dart';
 import 'constants/app_colors.dart';
 import 'constants/app_constants.dart';
 import 'constants/app_strings.dart';
-import 'ui/widgets/tools/screen_size.dart';
-import 'ui/widgets/tools/toast.dart';
+import 'ui/tools/screen_size.dart';
+import 'ui/tools/smart_dialog_config.dart';
+import 'ui/widgets/setup_dependencies.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +30,7 @@ Future<void> main() async {
       data.buffer.asUint8List(),
     );
   }
-  setupLocator();
+  setupDependencies();
   runApp(const MyApp());
 }
 
@@ -41,33 +41,37 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
-      builder: (context, child) => StatusbarzCapturer(
-        child: MaterialApp(
-          title: AppStrings.appName,
-          theme: ThemeData(
-            primarySwatch: generateMaterialColor(Palette.primary),
-            fontFamily: FontFamily.barlow,
-            scaffoldBackgroundColor: Palette.scaffoldBackgroundColor,
-          ),
-          builder: FlutterSmartDialog.init(
-            builder: (context, child) {
-              ScreenSize.init(context);
+      builder: (context, child) {
+        return StatusbarzCapturer(
+          child: MaterialApp(
+            title: AppStrings.appName,
+            theme: ThemeData(
+              primarySwatch: generateMaterialColor(Palette.primary),
+              fontFamily: FontFamily.barlow,
+              scaffoldBackgroundColor: Palette.scaffoldBackgroundColor,
+            ),
+            builder: FlutterSmartDialog.init(
+              builder: (context, child) {
+                ScreenSize.init(context);
 
-              return MediaQuery(
-                data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
-                child: child!,
-              );
-            },
-            toastBuilder: toastBuilder,
+                return MediaQuery(
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+                  child: child!,
+                );
+              },
+              toastBuilder: toastBuilder,
+              loadingBuilder: loadingBuilder,
+            ),
+            navigatorKey: StackedService.navigatorKey,
+            onGenerateRoute: StackedRouter().onGenerateRoute,
+            navigatorObservers: [
+              StackedService.routeObserver,
+              Statusbarz.instance.observer,
+              FlutterSmartDialog.observer
+            ],
           ),
-          navigatorKey: StackedService.navigatorKey,
-          onGenerateRoute: StackedRouter().onGenerateRoute,
-          navigatorObservers: [
-            Statusbarz.instance.observer,
-            FlutterSmartDialog.observer
-          ],
-        ),
-      ),
+        );
+      },
     );
   }
 }

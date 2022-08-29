@@ -13,6 +13,8 @@ import '../ui/screens/splash/splash_view.dart';
   dependencies: [
     LazySingleton(classType: ApiService),
     LazySingleton(classType: NavigationService),
+    LazySingleton(classType: DialogService),
+    LazySingleton(classType: BottomSheetService),
   ],
 )
 class AppSetup {}

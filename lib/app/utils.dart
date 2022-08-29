@@ -17,6 +17,8 @@ String getDeviceType() {
 }
 
 NavigationService get navigationService => locator<NavigationService>();
+DialogService get dialogService => locator<DialogService>();
+BottomSheetService get sheetService => locator<BottomSheetService>();
 
 void dismissKeyboard(BuildContext context) {
   FocusScopeNode currentFocus = FocusScope.of(context);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../widgets/tools/screen_size.dart';
+import '../../tools/screen_size.dart';
 import 'splash_viewmodel.dart';
 
 class SplashView extends StatelessWidget {
