@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,8 +10,9 @@ import 'package:statusbarz/statusbarz.dart';
 
 import 'app/app.router.dart';
 import 'constants/app_colors.dart';
-import 'constants/app_constants.dart';
 import 'constants/app_strings.dart';
+import 'constants/assets.gen.dart';
+import 'constants/fonts.gen.dart';
 import 'ui/tools/screen_size.dart';
 import 'ui/tools/smart_dialog_config.dart';
 import 'ui/widgets/setup_dependencies.dart';
@@ -22,13 +24,15 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  if (Platform.isAndroid) {
-    ByteData data = await PlatformAssetBundle().load(
-      'assets/ca/lets-encrypt-r3.pem',
-    );
-    SecurityContext.defaultContext.setTrustedCertificatesBytes(
-      data.buffer.asUint8List(),
-    );
+  if (!kIsWeb) {
+    if (Platform.isAndroid) {
+      ByteData data = await PlatformAssetBundle().load(
+        Assets.ca.letsEncryptR3,
+      );
+      SecurityContext.defaultContext.setTrustedCertificatesBytes(
+        data.buffer.asUint8List(),
+      );
+    }
   }
   setupDependencies();
   runApp(const MyApp());

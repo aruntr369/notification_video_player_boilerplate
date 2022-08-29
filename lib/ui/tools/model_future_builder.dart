@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../constants/app_colors.dart';
+import '../../constants/app_colors.dart';
 import '../widgets/shared.dart';
 
 class ModelFutureBuilder<T> extends StatelessWidget {
@@ -12,8 +13,9 @@ class ModelFutureBuilder<T> extends StatelessWidget {
     this.onError,
     this.loading,
     this.onRefresh,
-    this.errorText,
+    this.error,
     this.isFullScreen = false,
+    this.isSheet = false,
   }) : super(key: key);
 
   final bool busy;
@@ -21,21 +23,22 @@ class ModelFutureBuilder<T> extends StatelessWidget {
   final WidgetBuilder? onError;
   final RefreshCallback? onRefresh;
   final bool isFullScreen;
-  final String? errorText;
+  final bool isSheet;
+  final dynamic error;
   final Widget? loading;
   final ValueWidgetBuilder<T> builder;
 
   @override
   Widget build(BuildContext context) {
     if (busy) {
-      return loading ?? ModelBusyWidget(isFullScreen: isFullScreen);
+      return loading ?? ModelBusyWidget(isFullScreen: isFullScreen || isSheet);
     } else {
       if (data == null) {
         return onError != null
             ? onError!(context)
             : ModelErrorWidget(
                 onRefresh: onRefresh,
-                errorText: errorText ?? 'Something went wrong',
+                error: error,
                 isFullScreen: isFullScreen,
               );
       } else {
@@ -83,7 +86,7 @@ class ModelFutureListBuilder<T> extends StatelessWidget {
         return empty ??
             ModelErrorWidget(
               onRefresh: hasRefreshButton ? onRefresh : null,
-              errorText: emptyText ?? 'List is empty',
+              error: emptyText ?? 'No items found',
               isFullScreen: isFullScreen,
             );
       } else {
@@ -109,13 +112,8 @@ class ModelBusyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isFullScreen) {
-      return Scaffold(
-        appBar: AppBar(
-          leading: backButton(),
-          elevation: 0,
-          backgroundColor: Palette.scaffoldBackgroundColor,
-        ),
-        body: const SizedBox.expand(
+      return const Scaffold(
+        body: SizedBox.expand(
           child: Center(child: CircularProgressIndicator()),
         ),
       );
@@ -128,12 +126,12 @@ class ModelErrorWidget extends StatelessWidget {
   const ModelErrorWidget({
     Key? key,
     this.onRefresh,
-    required this.errorText,
+    required this.error,
     required this.isFullScreen,
   }) : super(key: key);
 
   final RefreshCallback? onRefresh;
-  final String errorText;
+  final dynamic error;
   final bool isFullScreen;
 
   @override
@@ -142,9 +140,10 @@ class ModelErrorWidget extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           leading: backButton(),
-          elevation: 0,
-          backgroundColor: Palette.scaffoldBackgroundColor,
+          elevation: 8,
+          backgroundColor: Colors.transparent,
         ),
+        extendBodyBehindAppBar: true,
         body: _getBody(),
       );
     }
@@ -161,17 +160,32 @@ class ModelErrorWidget extends StatelessWidget {
             visible: onRefresh != null,
             child: OutlinedButton(
               onPressed: onRefresh,
-              child: const Text('Refresh'),
+              style: OutlinedButton.styleFrom(
+                primary: Palette.primary,
+                visualDensity: VisualDensity.comfortable,
+                tapTargetSize: MaterialTapTargetSize.padded,
+                padding: EdgeInsets.fromLTRB(15.w, 13.h, 15.w, 10.h),
+              ),
+              child: Text(
+                'Refresh',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ),
           ),
           Container(
             margin: EdgeInsets.only(top: onRefresh != null ? 10 : 0),
             child: Text(
-              errorText,
+              error?.toString() ?? "",
+              textAlign: TextAlign.center,
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 14.sp,
                 fontWeight: FontWeight.normal,
-                color: Colors.black.withOpacity(0.6),
+                color: Colors.black87,
               ),
             ),
           ),

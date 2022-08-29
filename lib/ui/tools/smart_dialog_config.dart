@@ -4,7 +4,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 import '../../../constants/app_colors.dart';
 import '../../../models/basics.dart';
-import '../widgets/blur_background.dart';
+import 'blur_background.dart';
 
 Widget loadingBuilder(String message) {
   return BlurBackground(

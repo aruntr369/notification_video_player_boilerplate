@@ -1,3 +1,4 @@
+import 'package:boilerplate/constants/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -11,14 +12,16 @@ class SplashView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<SplashViewModel>.reactive(
       onModelReady: (model) => model.startTimer(),
-      builder: (context, model, child) => Scaffold(
-        body: Container(
-          width: ScreenSize.width,
-          height: ScreenSize.height,
-          alignment: Alignment.center,
-          child: Image.asset("assets/images/logo.png"),
-        ),
-      ),
+      builder: (context, model, child) {
+        return Scaffold(
+          body: Container(
+            width: ScreenSize.width,
+            height: ScreenSize.height,
+            alignment: Alignment.center,
+            child: Assets.images.logo.image(),
+          ),
+        );
+      },
       viewModelBuilder: () => SplashViewModel(),
     );
   }

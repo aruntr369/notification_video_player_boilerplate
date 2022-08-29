@@ -7,10 +7,6 @@ abstract class Prefs {
   static const String user = "user";
 }
 
-abstract class FontFamily {
-  static const String barlow = "Barlow";
-}
-
 enum ToastType {
   success(0),
   error(1);
