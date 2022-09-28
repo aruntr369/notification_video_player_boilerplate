@@ -4,8 +4,11 @@
 
 // import '../constants/app_constants.dart';
 
+import 'package:audio_service/audio_service.dart';
+
 class UserService {
-  // AppUser? tempUser;
+
+// AppUser? tempUser;
   // AppUser? user;
 
   // void setTempUser(Map<String, dynamic>? data) {

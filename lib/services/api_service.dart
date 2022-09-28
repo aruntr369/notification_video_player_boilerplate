@@ -1,3 +1,4 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/retry.dart';
 import 'package:http/http.dart' as http;
@@ -5,6 +6,8 @@ import 'package:http/http.dart' as http;
 import '../constants/app_strings.dart';
 
 class ApiService {
+  late AudioHandler audioHandler;
+
   static const environment = ApiEnvironment.dev;
 
   static String baseUrl = environment.baseUrl;
